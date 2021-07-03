@@ -104,9 +104,13 @@ all_barcodes = Dir.glob("./input/barcodes*.csv")
   .sort
   .map { |e| CSV.read(e).drop(1).map { |e| Barcode.new(e[0], e[1], e[2]) } }
 
-# If there is a mismatch in input we abort
-if all_catalogs.length < 2 || all_catalogs.length != all_barcodes.length
-  puts "Catalogs and Barcodes data do not match"
+if all_catalogs.length < 2
+  puts "There should be a minimum of 2 catalogs to be merged"
+  exit 1
+end
+
+if all_catalogs.length != all_barcodes.length
+  puts "There should be as many catalog as there is barcodes files"
   exit 1
 end
 
@@ -125,7 +129,6 @@ loop do
     break
   end
 end
-
 
 # Only write to an output if the tests is successful
 if test(merged_catalog) then write_catalog_to_output_file("script_output", merged_catalog) end
