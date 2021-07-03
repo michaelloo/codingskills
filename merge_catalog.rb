@@ -126,7 +126,7 @@ end
 merged_catalog = all_catalogs.shift
 merged_barcodes = all_barcodes.shift
 
-# Extract each items into the merged catalog
+# Extract each items from remaining catalogs into the merged catalog
 loop do
   next_catalog = all_catalogs.shift
   next_barcodes = all_barcodes.shift
@@ -138,7 +138,10 @@ loop do
   end
 end
 
-# Only write to an output if the tests is successful
+# Write the output of the scripts to a file
 write_catalog_to_output_file(SCRIPT_OUTPUT_FILE_NAME, merged_catalog)
 
+# Test the output matches the expected output:
+# if logic was changed the data set should not change
+# if the data set changed, then the `expected_output` needs to be updated
 test(merged_catalog)
