@@ -28,9 +28,9 @@ Supplier = Struct.new(:id, :name)
 ###########
 
 # Reads the CSV content from a given file name
-def read_csv_from_file_named(file_name)
+def get_data_from_csv(csv)
   # Drop the first row as it contains the legend
-  CSV.read("./input/#{file_name}.csv").drop(1)
+  CSV.read(csv).drop(1)
 end
 
 # Sorts a given catalog based on its description and source to be more human discoverable
@@ -76,8 +76,7 @@ end
 # Tests the scripts output
 def test(catalog)
   sorted_script_catalog = sort(catalog.items)
-  result_output_catalog = CSV.read("./output/#{EXPECTED_OUTPUT_FILE_NAME}.csv")
-    .drop(1)
+  result_output_catalog = get_data_from_csv("./output/#{EXPECTED_OUTPUT_FILE_NAME}.csv")
     .map { |e| CatalogItem.new(e[0], e[1], e[2]) }
   result_output_sorted_catalog = sort(result_output_catalog)
 
@@ -104,13 +103,13 @@ end
 # Get all the catalogs
 all_catalogs = Dir.glob("./input/catalog*.csv")
   .sort
-  .map { |file| CSV.read(file).drop(1).map { |e| CatalogItem.new(e[0], e[1], File.basename(file, ".csv")[-1]) } }
+  .map { |file| get_data_from_csv(file).map { |e| CatalogItem.new(e[0], e[1], File.basename(file, ".csv")[-1]) } }
   .map { |e| Catalog.new(e) }
 
 # Get all the barcodes
 all_barcodes = Dir.glob("./input/barcodes*.csv")
   .sort
-  .map { |e| CSV.read(e).drop(1).map { |e| Barcode.new(e[0], e[1], e[2]) } }
+  .map { |file| get_data_from_csv(file).map { |e| Barcode.new(e[0], e[1], e[2]) } }
 
 if all_catalogs.length < 2
   warn "There should be a minimum of 2 catalogs to be merged"
