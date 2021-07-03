@@ -8,12 +8,12 @@ struct ContentView: View {
   @ObservedObject private var viewModel: ContentViewModel = ContentViewModel(dataStore: DataFetcher())
 
   var body: some View {
-    List(viewModel.items) { item in
-      HStack {
-        Text(item.description)
-        Text(item.sku)
-        Text(item.source)
+    NavigationView {
+      List(viewModel.viewItems) { item in
+        Text(item.text)
       }
+      .navigationTitle(viewModel.screenTitle)
+      .onAppear(perform: viewModel.loadViewItems)
     }
   }
 }

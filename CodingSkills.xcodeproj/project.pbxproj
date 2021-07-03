@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		DBD9CF0F26905FDF00961EF5 /* script_output.csv in Resources */ = {isa = PBXBuildFile; fileRef = DBD9CF0E26905FDF00961EF5 /* script_output.csv */; };
+		DBD9CF11269060B600961EF5 /* Catalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD9CF10269060B600961EF5 /* Catalog.swift */; };
 		DBDA48D726900203001A7FB8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBDA48D626900203001A7FB8 /* AppDelegate.swift */; };
 		DBDA48D926900203001A7FB8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBDA48D826900203001A7FB8 /* SceneDelegate.swift */; };
 		DBDA48DB26900203001A7FB8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBDA48DA26900203001A7FB8 /* ContentView.swift */; };
@@ -31,6 +32,7 @@
 
 /* Begin PBXFileReference section */
 		DBD9CF0E26905FDF00961EF5 /* script_output.csv */ = {isa = PBXFileReference; lastKnownFileType = file; name = script_output.csv; path = output/script_output.csv; sourceTree = SOURCE_ROOT; };
+		DBD9CF10269060B600961EF5 /* Catalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Catalog.swift; sourceTree = "<group>"; };
 		DBDA48D326900203001A7FB8 /* CodingSkills.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CodingSkills.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBDA48D626900203001A7FB8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DBDA48D826900203001A7FB8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 				DBDA48DA26900203001A7FB8 /* ContentView.swift */,
 				DBDA48FC26900A5E001A7FB8 /* ContentViewModel.swift */,
 				DBDA48FE26900AAE001A7FB8 /* DataFetcher.swift */,
+				DBD9CF10269060B600961EF5 /* Catalog.swift */,
 				DBDA48D826900203001A7FB8 /* SceneDelegate.swift */,
 				DBDA48DC26900204001A7FB8 /* Assets.xcassets */,
 				DBDA48E126900204001A7FB8 /* LaunchScreen.storyboard */,
@@ -220,6 +223,7 @@
 				DBDA48FF26900AAE001A7FB8 /* DataFetcher.swift in Sources */,
 				DBDA48FD26900A5E001A7FB8 /* ContentViewModel.swift in Sources */,
 				DBDA48D726900203001A7FB8 /* AppDelegate.swift in Sources */,
+				DBD9CF11269060B600961EF5 /* Catalog.swift in Sources */,
 				DBDA48D926900203001A7FB8 /* SceneDelegate.swift in Sources */,
 				DBDA48DB26900203001A7FB8 /* ContentView.swift in Sources */,
 			);
