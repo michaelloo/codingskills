@@ -3,6 +3,13 @@
 require 'csv'
 require 'set'
 
+#############
+# Variables #
+#############
+
+SCRIPT_OUTPUT_FILE_NAME = "script_output"
+EXPECTED_OUTPUT_FILE_NAME = "expected_output"
+
 ###############
 # Data Models #
 ###############
@@ -55,7 +62,7 @@ def extract_items(from_catalog, from_barcodes, merged_catalog, merged_barcodes)
 
   # Add barcodes to the merged barcodes list so we keep track of all barcodes
   # as we move forward
-  merged_barcodes.append(from_barcodes)
+  from_barcodes.each { |e| merged_barcodes.append(e) }
 end
 
 # Writes the given catalog to a given output file name
@@ -69,7 +76,7 @@ end
 # Tests the scripts output
 def test(catalog)
   sorted_script_catalog = sort(catalog.items)
-  result_output_catalog = CSV.read("./output/result_output.csv")
+  result_output_catalog = CSV.read("./output/#{EXPECTED_OUTPUT_FILE_NAME}.csv")
     .drop(1)
     .map { |e| CatalogItem.new(e[0], e[1], e[2]) }
   result_output_sorted_catalog = sort(result_output_catalog)
@@ -80,11 +87,12 @@ def test(catalog)
     puts "###############"
     true
   else
-    puts "###############"
-    puts "# Test FAILED #"
-    puts "###############"
-    puts "Script output does not match expectation:"
-    puts "#{sorted_script_catalog}\ndoes not match\n#{result_output_sorted_catalog}"
+    warn "###############"
+    warn "# Test FAILED #"
+    warn "###############"
+    warn "Script output does not match expectation:"
+    warn `diff output/#{SCRIPT_OUTPUT_FILE_NAME}.csv output/#{EXPECTED_OUTPUT_FILE_NAME}.csv`
+    warn "If changes are expected, please update `output/#{EXPECTED_OUTPUT_FILE_NAME}.csv`"
     false
   end
 end
@@ -105,12 +113,12 @@ all_barcodes = Dir.glob("./input/barcodes*.csv")
   .map { |e| CSV.read(e).drop(1).map { |e| Barcode.new(e[0], e[1], e[2]) } }
 
 if all_catalogs.length < 2
-  puts "There should be a minimum of 2 catalogs to be merged"
+  warn "There should be a minimum of 2 catalogs to be merged"
   exit 1
 end
 
 if all_catalogs.length != all_barcodes.length
-  puts "There should be as many catalog as there is barcodes files"
+  warn "There should be as many catalog as there is barcodes files"
   exit 1
 end
 
@@ -131,4 +139,6 @@ loop do
 end
 
 # Only write to an output if the tests is successful
-if test(merged_catalog) then write_catalog_to_output_file("script_output", merged_catalog) end
+write_catalog_to_output_file(SCRIPT_OUTPUT_FILE_NAME, merged_catalog)
+
+test(merged_catalog)
