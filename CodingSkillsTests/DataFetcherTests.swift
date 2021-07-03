@@ -14,7 +14,7 @@ final class DataFetcherTests: XCTestCase {
   override func setUp() {
     super.setUp()
 
-    dataFetcher = DataFetcher()
+    dataFetcher = DataFetcher(path: Bundle(for: type(of: self)).path(forResource: "test_catalog", ofType: "csv")!)
   }
 
   override func tearDown() {
@@ -25,14 +25,9 @@ final class DataFetcherTests: XCTestCase {
 
   func test_fetchCatalog() {
     let expectedCatalog = Catalog(items: [
-      Catalog.Item(sku: "280-oad-768", description:"Bread - Raisin", source: "A"),
-      Catalog.Item(sku: "650-epd-782", description:"Carbonated Water - Lemon Lime", source: "A"),
-      Catalog.Item(sku: "999-epd-782", description:"Carbonated Water - Lemon Lime", source: "B"),
-      Catalog.Item(sku: "167-eol-949", description:"Cheese - Grana Padano", source: "A"),
-      Catalog.Item(sku: "999-eol-949", description:"Cheese - Grana Padano", source: "B"),
-      Catalog.Item(sku: "xxx-xxx-xxx", description:"Shiny New Item", source: "C"),
-      Catalog.Item(sku: "165-rcy-650", description:"Tea - Decaf 1 Cup", source: "A"),
-      Catalog.Item(sku: "647-vyk-317", description:"Walkers Special Old Whiskey", source: "A"),
+      Catalog.Item(string: "aaa-bbb-ccc,Foo,X")!,
+      Catalog.Item(string: "bbb-aaa-ccc,Bar,Y")!,
+      Catalog.Item(string: "ddd-bbb-ccc,FooBar,X")!,
     ])
     var catalog: Catalog?
 
