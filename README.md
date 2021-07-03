@@ -1,23 +1,44 @@
 # Getting started
 
-## Toolset:
+## Toolset
+
+### Script
 
 - Ruby: 2.6.5
 
-## How to run the script
+### Xcode project
 
-- `./merge_catalogs.rb` can be ran directly from command line. It will output its results to the console but also in the `output/` folder.
+- Xcode: 12.5
+- MacOS: 11.3.1 (Big Sur)
+
+## Generating the merged catalog
+
+- To generate the merged catalog, the script `./merge_catalogs.rb` can be ran from command line.
+It will output its results here: [output/script_output.csv](output/script_output.csv).
 - There is a test method in the script directly to ensure any changes to the output is expected. The test will catch unintended logical errors.
 However, it won't be able to tell if the changes are expected due to new entries in the data set.
 
-## Project Information
+## Script
 
 - A *scripting language* was chosen for the exercise as it felt closer to the problem: reading from and writing to files.
 - `Ruby` was chosen as it is closer to my day to day programming language: Swift.
-- The solution is based on having barcodes as a way to identify a product across different catalogs (and suppliers). If a barcode if found in the merged catalog whilst traversing the list, it would be skipped and we would move to the next item.
+- The solution is based on having barcodes as a way to identify a product across different catalogs (and suppliers).
+If a barcode if found in the merged catalog whilst traversing the list, it would be skipped and we would move to the next item.
 - The `result_output` has been renamed to `expected_output` as a way to differentiate between the script's output and what was expected.
 - The `result_output` file has been updated as new data set for catalogC and barcodeC were added
 - The products in the output files have been sorted using their description and source as a way to more easily compare the changes lists (in the test and in git)
+
+## Xcode Project
+
+- A simple Xcode project has been created to package the output of the script into an iOS app and then read on a simulator or device
+- Open `CodingSkills.xcodeproj` and one will see the project structured as follow:
+    - CodingSkills (production code)
+        - App (for application / view level code)
+            - ViewModels (for business logic related to how the data is presented to users)
+            - Views (for the user interface)
+        - Network (for network level code)
+    - CodingSkillsTests (tests code)
+- Tests have been written to cover the core business logic (ignoring views for now)
 
 ---
 
