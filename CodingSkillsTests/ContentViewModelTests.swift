@@ -35,14 +35,14 @@ final class ContentViewModelTests: XCTestCase {
 }
 
 private final class DataStoreStub: DataStore {
-  func fetchCatalog() -> AnyPublisher<Catalog, Never> {
+  func fetchCatalog() -> AnyPublisher<Catalog, DataStoreError> {
     let items = [
       Catalog.Item(string: "280-oad-768,Bread - Raisin,A")!,
       Catalog.Item(string: "650-epd-782,Carbonated Water - Lemon Lime,A")!,
       Catalog.Item(string: "999-epd-782,Carbonated Water - Lemon Lime,B")!,
     ]
     return Just(Catalog(items: items))
-      .setFailureType(to: Never.self)
+      .setFailureType(to: DataStoreError.self)
       .eraseToAnyPublisher()
   }
 }

@@ -12,13 +12,13 @@ final class DataFetcher: DataStore {
     self.path = path
   }
 
-  func fetchCatalog() -> AnyPublisher<Catalog, Never> {
+  func fetchCatalog() -> AnyPublisher<Catalog, DataStoreError> {
     guard let content = try? String(contentsOfFile: path).split(separator: "\n").dropFirst() else {
-      return Empty().eraseToAnyPublisher()
+      return Fail(error: DataStoreError.contentMissing).eraseToAnyPublisher()
     }
 
     return Just(Catalog(items: content.map(String.init).compactMap(Catalog.Item.init)))
-      .setFailureType(to: Never.self)
+      .setFailureType(to: DataStoreError.self)
       .eraseToAnyPublisher()
   }
 }

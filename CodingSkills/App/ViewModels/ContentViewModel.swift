@@ -5,8 +5,12 @@
 import SwiftUI
 import Combine
 
+enum DataStoreError: Error {
+  case contentMissing
+}
+
 protocol DataStore {
-  func fetchCatalog() -> AnyPublisher<Catalog, Never>
+  func fetchCatalog() -> AnyPublisher<Catalog, DataStoreError>
 }
 
 final class ContentViewModel: ObservableObject {
@@ -29,7 +33,7 @@ final class ContentViewModel: ObservableObject {
   func loadViewItems() {
     dataStore.fetchCatalog()
       .map { $0.items.map(ViewItem.init(catalogItem:)) }
-      .assign(to: \.viewItems, on: self)
+      .sink(receiveCompletion: { _ in }, receiveValue: { [weak self] in self?.viewItems = $0 })
       .store(in: &cancellables)
   }
 }
