@@ -3,6 +3,19 @@
 require 'csv'
 require 'set'
 
+###############
+# Data Models #
+###############
+
+Catalog = Struct.new(:items) do
+  def add(item)
+    items.append(item)
+  end
+end
+CatalogItem = Struct.new(:sku, :description, :source)
+Barcode = Struct.new(:supplier_id, :sku, :id)
+Supplier = Struct.new(:id, :name)
+
 ###########
 # Methods #
 ###########
@@ -18,18 +31,46 @@ def sort(catalog)
   catalog.to_a.sort { |a,b| [a.description, a.source] <=> [b.description, b.source] }
 end
 
+# Go through each items in a catalog and add it to the new catalog `to_catalog` if needed
+def extract_items(from_catalog, from_barcodes, merged_catalog, merged_barcodes)
+  from_catalog.items.each do |catalog_item|
+    # Select each barcodes that corresponds to the item's SKU we are inspecting
+    barcodes = from_barcodes.select { |e| e.sku == catalog_item.sku }
+
+    # Find a matching barcode from the new catalog
+    found_match = false
+    merged_barcodes.each do |barcode_a|
+      if barcodes.map { |e| e.id }.include? barcode_a.id
+        found_match = true
+        break
+      end
+    end
+
+    # If a match is found, it means we already have the item
+    # So we skip adding it to the merged catalog
+    unless found_match
+      merged_catalog.add(catalog_item)
+    end
+  end
+
+  # Add barcodes to the merged barcodes list so we keep track of all barcodes
+  # as we move forward
+  merged_barcodes.append(from_barcodes)
+end
+
 # Writes the given catalog to a given output file name
 def write_catalog_to_output_file(file_name, catalog)
   output_file = File.open("./output/#{file_name}.csv", "w")
   output_file.puts "SKU,Description,Source"
-  sort(catalog).each { |e| output_file.puts "#{e.sku},#{e.description},#{e.source}" }
+  sort(catalog.items).each { |e| output_file.puts "#{e.sku},#{e.description},#{e.source}" }
   output_file.close
 end
 
 # Tests the scripts output
-def test(script_output)
-  sorted_script_catalog = sort(script_output.to_a)
-  result_output_catalog = CSV.read("./output/result_output.csv").drop(1)
+def test(catalog)
+  sorted_script_catalog = sort(catalog.items)
+  result_output_catalog = CSV.read("./output/result_output.csv")
+    .drop(1)
     .map { |e| CatalogItem.new(e[0], e[1], e[2]) }
   result_output_sorted_catalog = sort(result_output_catalog)
 
@@ -52,44 +93,39 @@ end
 # Start of script #
 ###################
 
-# Data models to better reason about the problem
-CatalogItem = Struct.new(:sku, :description, :source)
-Barcode = Struct.new(:supplier_id, :sku, :id)
-Supplier = Struct.new(:id, :name)
+# Get all the catalogs
+all_catalogs = Dir.glob("./input/catalog*.csv")
+  .sort
+  .map { |file| CSV.read(file).drop(1).map { |e| CatalogItem.new(e[0], e[1], File.basename(file, ".csv")[-1]) } }
+  .map { |e| Catalog.new(e) }
 
-# Read catalog files and add the additional source information
-catalog_a = read_csv_from_file_named("catalogA").map { |e| CatalogItem.new(e[0], e[1], "A") }
-catalog_b = read_csv_from_file_named("catalogB").map { |e| CatalogItem.new(e[0], e[1], "B") }
+# Get all the barcodes
+all_barcodes = Dir.glob("./input/barcodes*.csv")
+  .sort
+  .map { |e| CSV.read(e).drop(1).map { |e| Barcode.new(e[0], e[1], e[2]) } }
 
-# Read barcode files
-barcodes_a = read_csv_from_file_named("barcodesA").map { |e| Barcode.new(e[0], e[1], e[2]) }
-barcodes_b = read_csv_from_file_named("barcodesB").map { |e| Barcode.new(e[0], e[1], e[2]) }
+# If there is a mismatch in input we abort
+if all_catalogs.length < 2 || all_catalogs.length != all_barcodes.length
+  puts "Catalogs and Barcodes data do not match"
+  exit 1
+end
 
-# Create new merged catalog based on the original's company data
-# We use a Set here to avoid duplicate entries
-merged_catalog = catalog_a.to_set
+# Create new merged catalog based on the first catalog
+merged_catalog = all_catalogs.shift
+merged_barcodes = all_barcodes.shift
 
-# Go through each items in the catalog from Company B
-catalog_b.each do |catalog_item|
+# Extract each items into the merged catalog
+loop do
+  next_catalog = all_catalogs.shift
+  next_barcodes = all_barcodes.shift
 
-  # Select each barcodes that corresponds to the item's SKU we are inspecting
-  barcodes = barcodes_b.select { |e| e.sku == catalog_item.sku }
+  extract_items(next_catalog, next_barcodes, merged_catalog, merged_barcodes)
 
-  # Find a matching barcode from Company A's stock
-  found_match = false
-  barcodes_a.each do |barcode_a|
-    if barcodes.map { |e| e.id }.include? barcode_a.id
-      found_match = true
-      break
-    end
-  end
-
-  # If a match is found, it means we already have the item
-  # So we skip adding it to the merged catalog
-  unless found_match
-    merged_catalog.add(catalog_item)
+  if all_catalogs.length == 0 || all_barcodes.length == 0
+    break
   end
 end
+
 
 # Only write to an output if the tests is successful
 if test(merged_catalog) then write_catalog_to_output_file("script_output", merged_catalog) end
