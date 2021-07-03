@@ -1,11 +1,34 @@
+# Getting started
+
+## Toolset:
+
+- Ruby: 2.6.5
+
+## How to run the script
+
+- `./merge_catalogs.rb` can be ran directly from command line. It will output its results to the console but also in the `output/` folder.
+- There is a test method in the script directly to ensure any changes to the output is expected. The test will catch unintended logical errors.
+However, it won't be able to tell if the changes are expected due to new entries in the data set.
+
+## Project Information
+
+- A *scripting language* was chosen for the exercise as it felt closer to the problem: reading from and writing to files.
+- `Ruby` was chosen as it is closer to my day to day programming language: Swift.
+- The solution is based on having barcodes as a way to identify a product across different catalogs (and suppliers). If a barcode if found in the merged catalog whilst traversing the list, it would be skipped and we would move to the next item.
+- The `result_output` has been renamed to `expected_output` as a way to differentiate between the script's output and what was expected.
+- The `result_output` file has been updated as new data set for catalogC and barcodeC were added
+- The products in the output files have been sorted using their description and source as a way to more easily compare the changes lists (in the test and in git)
+
+---
+
 # Coding Skills Challenge
 
 ### The below describes a problem statement, make sure to read all the instructions in this readme before you start.
 
 ### Business Requirement:
 
-- Company A have acquired Company B, A and B sell some common products, sourced from suppliers (Sometimes the same supplier, sometimes a different one). 
-- The business wants to consolidate the product catalog into one superset (merged catalog). 
+- Company A have acquired Company B, A and B sell some common products, sourced from suppliers (Sometimes the same supplier, sometimes a different one).
+- The business wants to consolidate the product catalog into one superset (merged catalog).
 
 ### There are possibilities like:
 
@@ -16,7 +39,7 @@
 - Product on merged catalog must have information about the company it belongs to originally.  
 
 The business provided the following information that may help in identifying a matching product:
-- Products have associated suppliers, each supplier provides 1 or many barcodes for a product, 
+- Products have associated suppliers, each supplier provides 1 or many barcodes for a product,
 - A product may have many suppliers,
 - If any supplier barcode matches for one product of company A with Company B then we can consider that those products as the same.
 
@@ -31,9 +54,9 @@ You need to produce code in your preferred language which can demonstrate follow
 
 ### Initial load
 - Mega merge: All products from both companies should get merge into a common catalog
- 
 
-### Sample Data 
+
+### Sample Data
 Please refer input folder for following CSVs:
 1. [catalogA.csv](input/catalogA.csv) - Products for Company A
 1. [catalogB.csv](input/catalogB.csv) - Products for Company B
@@ -49,5 +72,5 @@ Please refer input folder for following CSVs:
 - Proving your code works via unit testing is highly encouraged.
 - Spend as little or as much time as you like ⌚
 - The code you produce can be in any language ⭐
-- The output of the efforts ❗ must be committed back into a Public Repo in Github and the URL shared back for review. 
+- The output of the efforts ❗ must be committed back into a Public Repo in Github and the URL shared back for review.
 - Document instructions on how to install and run your solution in the README.
