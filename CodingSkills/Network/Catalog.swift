@@ -4,8 +4,8 @@
 
 import Foundation
 
-struct Catalog {
-  struct Item {
+struct Catalog: Equatable {
+  struct Item: Equatable {
     let sku: String
     let description: String
     let source: String

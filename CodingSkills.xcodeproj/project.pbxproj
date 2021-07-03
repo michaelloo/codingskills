@@ -13,6 +13,7 @@
 		DB883DB72690666500E939FB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB883DB02690666500E939FB /* AppDelegate.swift */; };
 		DB883DB82690666500E939FB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB883DB22690666500E939FB /* ContentView.swift */; };
 		DB883DB92690666500E939FB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB883DB32690666500E939FB /* SceneDelegate.swift */; };
+		DB883DBB269066CC00E939FB /* DataFetcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB883DBA269066CC00E939FB /* DataFetcherTests.swift */; };
 		DBD9CF0F26905FDF00961EF5 /* script_output.csv in Resources */ = {isa = PBXBuildFile; fileRef = DBD9CF0E26905FDF00961EF5 /* script_output.csv */; };
 		DBDA48DD26900204001A7FB8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBDA48DC26900204001A7FB8 /* Assets.xcassets */; };
 		DBDA48E026900204001A7FB8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBDA48DF26900204001A7FB8 /* Preview Assets.xcassets */; };
@@ -37,6 +38,7 @@
 		DB883DB02690666500E939FB /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DB883DB22690666500E939FB /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		DB883DB32690666500E939FB /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		DB883DBA269066CC00E939FB /* DataFetcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFetcherTests.swift; sourceTree = "<group>"; };
 		DBD9CF0E26905FDF00961EF5 /* script_output.csv */ = {isa = PBXFileReference; lastKnownFileType = text; name = script_output.csv; path = output/script_output.csv; sourceTree = SOURCE_ROOT; };
 		DBDA48D326900203001A7FB8 /* CodingSkills.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CodingSkills.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBDA48DC26900204001A7FB8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -147,6 +149,7 @@
 			children = (
 				DBDA48F426900836001A7FB8 /* Info.plist */,
 				DBDA48FA2690085C001A7FB8 /* ContentViewModelTests.swift */,
+				DB883DBA269066CC00E939FB /* DataFetcherTests.swift */,
 			);
 			path = CodingSkillsTests;
 			sourceTree = "<group>";
@@ -266,6 +269,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DBDA48FB2690085C001A7FB8 /* ContentViewModelTests.swift in Sources */,
+				DB883DBB269066CC00E939FB /* DataFetcherTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
