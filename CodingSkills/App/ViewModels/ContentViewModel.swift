@@ -20,15 +20,21 @@ final class ContentViewModel: ObservableObject {
     let id: String = UUID().uuidString
   }
 
+  // MARK: - Properties
+
   @Published var viewItems: [ViewItem] = []
   var screenTitle: String = "Catalog"
   
   private let dataStore: DataStore
   private var cancellables: Set<AnyCancellable> = .init()
 
+  // MARK: - Lifecycle
+
   init(dataStore: DataStore) {
     self.dataStore = dataStore
   }
+  
+  // MARK: - Functions
 
   func loadViewItems() {
     dataStore.fetchCatalog()

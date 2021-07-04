@@ -5,9 +5,12 @@
 import Combine
 import Foundation
 
+/// Class responsible for fetching the catalog data to be displayed to users
 final class DataFetcher: DataStore {
   private let path: String
 
+  /// Initialiser which takes in the `path` to the CSV file.
+  /// - Parameter path: path to the csv file which is in the `Bundle`
   init(path: String = Bundle.main.path(forResource: "script_output", ofType: "csv")!) {
     self.path = path
   }
