@@ -24,20 +24,23 @@ However, it won't be able to tell if the changes are expected due to new entries
 - `Ruby` was chosen as it is closer to my day to day programming language: Swift.
 - The solution is based on having barcodes as a way to identify a product across different catalogs (and suppliers).
 If a barcode if found in the merged catalog whilst traversing the list, it would be skipped and we would move to the next item.
-- The `result_output` has been renamed to `expected_output` as a way to differentiate between the script's output and what was expected.
-- The `result_output` file has been updated as new data set for catalogC and barcodeC were added
+- The `result_output` has been renamed to `expected_output` as a way to differentiate between the script's output and what was expected (for testing).
+- The `expected_output` file has been updated as new data set for catalogC and barcodeC were added
 - The products in the output files have been sorted using their description and source as a way to more easily compare the changes lists (in the test and in git)
 
 ## Xcode Project
 
+- Note: You will need Xcode (and therefore a macOS toolchain) in order to build & run the project.
 - A simple Xcode project has been created to package the output of the script into an iOS app and then read on a simulator or device
-- Open `CodingSkills.xcodeproj` and one will see the project structured as follow:
+- Open `CodingSkills.xcodeproj` with Xcode and the project is structured as follow:
     - CodingSkills (production code)
         - App (for application / view level code)
             - ViewModels (for business logic related to how the data is presented to users)
             - Views (for the user interface)
         - Network (for network level code)
     - CodingSkillsTests (tests code)
+- Press `CMD+R` to run the application against the chosen device or simulator 
+- Press `CMD+U` to run the tests
 - Tests have been written to cover the core business logic (ignoring views for now)
 
 ---
